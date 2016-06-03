@@ -1,11 +1,11 @@
 /**************************************
 	Function to convert miles to meters
-	Function Name: convert_radius
+	Function Name: fn_convert_radius
 	Author: Chris Ehmett
 	Last Updated: 06/03/2016
 ***************************************/
 
-CREATE OR REPLACE FUNCTION convert_radius (p_miles INT)
+CREATE OR REPLACE FUNCTION fn_convert_radius (p_miles INT)
 	RETURNS FLOAT
 AS $$
 --multiply miles by meter conversion
