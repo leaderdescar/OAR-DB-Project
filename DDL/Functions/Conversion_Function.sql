@@ -1,5 +1,6 @@
 /**************************************
 	Function to convert miles to meters
+	Function Name: convert_radius
 	Author: Chris Ehmett
 	Last Updated: 06/03/2016
 ***************************************/
