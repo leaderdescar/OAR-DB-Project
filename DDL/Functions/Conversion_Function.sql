@@ -9,6 +9,6 @@ CREATE OR REPLACE FUNCTION fn_convert_radius (p_miles INT)
 	RETURNS FLOAT
 AS $$
 --multiply miles by meter conversion
-Select $1 * 0.000621371;
+Select $1 * 1609.344;
 $$ 
 LANGUAGE 'plpgsql';
