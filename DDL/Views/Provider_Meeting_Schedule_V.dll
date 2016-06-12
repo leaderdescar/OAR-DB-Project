@@ -1,0 +1,36 @@
+/********************************************
+	View: Provider Details
+	Function Name: Provider_Meeting_Schedule_V
+	Author: Chris Ehmett
+	Last Updated: 06/12/2016
+*********************************************/
+
+CREATE OR REPLACE VIEW Provider_Meeting_Schedule_V AS
+SELECT 
+prvdr.prvdr_id AS Provider_ID
+, prvdr.locn_geo_point AS Geo_Point
+, prvdr.locn_lati_qty AS Latitude
+, prvdr.locn_long_qty AS Longitude
+, orgnn_nme.orgnn_name AS Provider_Org_Name
+, orgnn_nme.orgnn_alias_nme AS Provider_Org_Alias
+, phon.phon_num AS Phone_Number
+, addr.addr_line_1_txt AS Address_Line_1
+, addr.addr_line_2_txt AS Address_Line_2
+, addr.addr_line_3_txt AS Address_Line_3
+, addr.city_nme AS City_Name
+, addr.stt_cde AS State
+, addr.postl_cde AS Postal_code
+, mtg_schdle.mtng_typ_cde AS Meeting_Type_Code
+, mtg_schdle.mtng_day_nme AS Meeting_Day
+, mtg_schdle.mtng_tm AS Meeting_Time,
+mtg_schdle.mtng_frq_desc AS Meeting_Frequency
+FROM "OAR_OSP_DB".prvdr_t prvdr
+LEFT JOIN "OAR_OSP_DB".prvdr_orgnn_nme orgnn_nme
+ON prvdr.prvdr_id = orgnn_nme.prvdr_id 
+LEFT JOIN "OAR_OSP_DB".prvdr_addr_t addr
+ON prvdr.prvdr_id = addr.prvdr_id
+INNER JOIN "OAR_OSP_DB".prvdr_mtng_schdl_t mtg_schdle
+ON  prvdr.prvdr_id = mtg_schdle.prvdr_id
+LEFT JOIN "OAR_OSP_DB".prvdr_phon_t phon
+ON  prvdr.prvdr_id = phon.prvdr_id
+;
