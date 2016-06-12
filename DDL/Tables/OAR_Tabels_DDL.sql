@@ -138,7 +138,7 @@ ALTER TABLE "OAR_OSP_DB"."prvdr_orgnn_nme" ADD CONSTRAINT "prvdr_nme_pk" PRIMARY
 
 -- Table OAR_OSP_DB.prdvr_cntc_t
 
-CREATE TABLE "OAR_OSP_DB"."prdvr_cntc_t"(
+CREATE TABLE "OAR_OSP_DB"."prvdr_cntc_t"(
  "prvdr_cntc_id" Integer NOT NULL,
  "prvdr_id" Integer NOT NULL,
  "cnct_typ_cde" Character(4) NOT NULL,
@@ -154,15 +154,15 @@ CREATE TABLE "OAR_OSP_DB"."prdvr_cntc_t"(
 
 -- Create indexes for table OAR_OSP_DB.prdvr_cntc_t
 
-CREATE INDEX "ix_prvdr_cntc_rel" ON "OAR_OSP_DB"."prdvr_cntc_t" ("prvdr_id")
+CREATE INDEX "ix_prvdr_cntc_rel" ON "OAR_OSP_DB"."prvdr_cntc_t" ("prvdr_id")
 ;
 
-CREATE INDEX "ix_cntc_typ_rel" ON "OAR_OSP_DB"."prdvr_cntc_t" ("cnct_typ_cde")
+CREATE INDEX "ix_cntc_typ_rel" ON "OAR_OSP_DB"."prvdr_cntc_t" ("cnct_typ_cde")
 ;
 
 -- Add keys for table OAR_OSP_DB.prdvr_cntc_t
 
-ALTER TABLE "OAR_OSP_DB"."prdvr_cntc_t" ADD CONSTRAINT "prvdr_cnct_pk" PRIMARY KEY ("prvdr_cntc_id")
+ALTER TABLE "OAR_OSP_DB"."prvdr_cntc_t" ADD CONSTRAINT "prvdr_cnct_pk" PRIMARY KEY ("prvdr_cntc_id")
 ;
 
 -- Table OAR_OSP_DB.prvdr_phon_t
