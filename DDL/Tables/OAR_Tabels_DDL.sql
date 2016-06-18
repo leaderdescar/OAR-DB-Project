@@ -1,6 +1,6 @@
 /*
 Created: 6/5/2016
-Modified: 6/11/2016
+Modified: 6/17/2016
 Project: IT 700 Capstone
 Model: OAR Data Model
 Author: Chris Ehmett
@@ -59,7 +59,8 @@ SELECT AddGeometryColumn('prvdr_t', 'locn_geo_point', 4326,'POINT',2);
 
 CREATE INDEX "ix_prdr_typ_rel" ON "OAR_OSP_DB"."prvdr_t" ("prvdr_typ_cde")
 ;
-
+CREATE INDEX ix_prvdr_locn_geo_point ON "OAR_OSP_DB".prvdr_t USING GIST ( locn_geo_point )
+;
 -- Add keys for table OAR_OSP_DB.prvdr_t
 
 ALTER TABLE "OAR_OSP_DB"."prvdr_t" ADD CONSTRAINT "prvdr_pk" PRIMARY KEY ("prvdr_id")
