@@ -33,7 +33,7 @@ BEGIN
 						mtg.Phone_Number, mtg.Address_Line_1, mtg.Address_Line_2, mtg.Address_Line_3, mtg.City_Name, mtg.State, mtg.Postal_code, 
 						mtg.Meeting_Type_Code, mtg.Meeting_Day, mtg.Meeting_Time, mtg.Meeting_Frequency
 					FROM "OAR_OSP_DB".Provider_Meeting_Schedule_V mtg
-					WHERE mtg.Meeting_Type_Code = ANY($1);
+					WHERE mtg.Meeting_Type_Code = ANY(_p_mtg_typ);
 	ELSE
 			RETURN QUERY SELECT
 						mtg.Provider_ID, mtg.Latitude, mtg.Longitude, mtg.Provider_Org_Name, mtg.Provider_Org_Alias, 
