@@ -35,7 +35,7 @@ BEGIN
 	FROM tiger.geocode(_p_addr) As g; 
 
 
-	IF _p_prvdr_typ  <> '{}'::text[] THEN
+	IF _p_mtg_typ  <> '{}'::text[] THEN
 	
 		RETURN QUERY SELECT * FROM "OAR_OSP_DB".fn_mtg_by_lat_lon_typ_optn(_p_radius,_v_lat, _v_lon,_p_mtg_typ);
 	ELSE
