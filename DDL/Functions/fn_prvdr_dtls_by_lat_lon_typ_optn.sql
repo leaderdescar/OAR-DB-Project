@@ -9,43 +9,56 @@
 	address or zip passed
 ***************************************/
 
---DROP FUNCTION "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(double precision,varchar,text[])
---test select SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(10, '18 Patton St Rochester, NH 03867', '{MD,SA}');
---test select SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(10, '03867', '{MD,SA}');
---test select SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn (10, 43.310216, -70.987599);
-CREATE OR REPLACE FUNCTION "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(
+-- Function: "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(double precision, numeric, numeric, text[])
+
+-- DROP FUNCTION "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(double precision, numeric, numeric, text[]);
+
+CREATE OR REPLACE FUNCTION "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(
     IN _p_radius double precision,
-    IN _p_addr VARCHAR,
-    IN _p_prvdr_typ text[] DEFAULT '{}')
-  RETURNS TABLE (Provider_Id INT,Provider_Type_Code CHAR,Geo_Point GEOMETRY(POINT,4326),Latitude NUMERIC  ,Longitude NUMERIC, Provider_Org_Name VARCHAR,
-			Provider_Org_Alias VARCHAR,Contact_Title VARCHAR ,Contact_First_Name VARCHAR ,Contact_Middle_Initial CHAR,
-			Contact_Last_Name VARCHAR,Phone_Number CHAR,Address_Line_1 VARCHAR ,Address_Line_2 VARCHAR ,Address_Line_3 VARCHAR,
-			City VARCHAR,State CHAR,Postal_Code CHAR)
-AS
-$$
+    IN _p_lat numeric,
+    IN _p_lon numeric,
+    IN _p_prvdr_typ text[] DEFAULT '{}'::text[])
+  RETURNS TABLE(provider_id integer, provider_type_code character, geo_point geometry, latitude numeric, longitude numeric, provider_org_name character varying, provider_org_alias character varying, contact_title character varying, contact_first_name character varying, contact_middle_initial character, contact_last_name character varying, phone_number character, address_line_1 character varying, address_line_2 character varying, address_line_3 character varying, city character varying, state character, postal_code character) AS
+$BODY$
 
-                               
+
+                                                    
 BEGIN
-
-DECLARE
-
-_v_lon NUMERIC;
-_v_lat NUMERIC;
-_v_geom GEOMETRY;
-                     
-
-	--get lon lat from address or xip code passed and load into variable
-	SELECT tiger.ST_X(g.geomout), tiger.ST_Y(g.geomout) INTO _v_lon, _v_lat
-	FROM tiger.geocode(_p_addr) As g; 
-
-
+	
 	IF _p_prvdr_typ  <> '{}'::text[] THEN
 	
-		RETURN QUERY SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(_p_radius,_v_lat, _v_lon,_p_prvdr_typ);
+		RETURN QUERY SELECT 
+			prvdr.Provider_Id as Provider_Id_out, prvdr.Provider_Type_Code as Provider_Type_Code_out, 
+			prvdr.Geo_Point as Geo_Point_out, prvdr.Latitude as Latitude_out, prvdr.Longitude as Longitude_out, 
+			prvdr.Provider_Org_Name as Provider_Org_Name_out, prvdr.Provider_Org_Alias as Provider_Org_Name_out, prvdr.Contact_Title as Contact_Title_out, 
+			prvdr.Contact_First_Name as Contact_First_Name_out, prvdr.Contact_Middle_Initial as Contact_Middle_Initial_out,
+			prvdr.Contact_Last_Name as Contact_Last_Name_out, prvdr.Phone_Number as Phone_Number_out, prvdr.Address_Line_1 as Address_Line_1_out, 
+			prvdr.Address_Line_2 as Address_Line_2_out, prvdr.Address_Line_3 as Address_Line_3_out,
+			prvdr.City as City_out, prvdr.State as State_out, prvdr.Postal_Code as Postal_Code_out
+			FROM "OAR_OSP_DB".Provider_Details_V prvdr
+			WHERE 
+			--Seach for points with the radius of the passes lat lon, 
+			-- convert lat lon to point wihtin function call with ST_GeomFromText
+				ST_DWithin((GeomFromEWKT('SRID=4326;POINT(' || _p_lon || ' ' || _p_lat || ')'))::geography,
+				(prvdr.Geo_Point)::geography, (SELECT "OAR_OSP_DB".fn_convert_radius(_p_radius)))
+			AND prvdr.Provider_Type_Code = any(_p_prvdr_typ);
 	ELSE
 	
-		RETURN QUERY SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(_p_radius,_v_lat, _v_lon);
+		RETURN QUERY SELECT 
+				prvdr.Provider_Id as Provider_Id_out, prvdr.Provider_Type_Code as Provider_Type_Code_out, 
+				prvdr.Geo_Point as Geo_Point_out, prvdr.Latitude as Latitude_out, prvdr.Longitude as Longitude_out, 
+				prvdr.Provider_Org_Name as Provider_Org_Name_out, prvdr.Provider_Org_Alias as Provider_Org_Name_out, prvdr.Contact_Title as Contact_Title_out, 
+				prvdr.Contact_First_Name as Contact_First_Name_out, prvdr.Contact_Middle_Initial as Contact_Middle_Initial_out,
+				prvdr.Contact_Last_Name as Contact_Last_Name_out, prvdr.Phone_Number as Phone_Number_out, prvdr.Address_Line_1 as Address_Line_1_out, 
+				prvdr.Address_Line_2 as Address_Line_2_out, prvdr.Address_Line_3 as Address_Line_3_out,
+				prvdr.City as City_out, prvdr.State as State_out, prvdr.Postal_Code as Postal_Code_out
+				FROM "OAR_OSP_DB".Provider_Details_V prvdr
+				WHERE 
+				--Seach for points with the radius of the passes lat lon, 
+				-- convert lat lon to point wihtin function call with ST_GeomFromText
+					ST_DWithin((GeomFromEWKT('SRID=4326;POINT(' || _p_lon || ' ' || _p_lat || ')'))::geography,
+					(prvdr.Geo_Point)::geography, (SELECT "OAR_OSP_DB".fn_convert_radius(_p_radius)));
 	END IF;
 END;  
-$$
-LANGUAGE 'plpgsql';
+$BODY$
+  LANGUAGE plpgsql
