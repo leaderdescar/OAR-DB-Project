@@ -1,25 +1,24 @@
-﻿/**************************************
-	Function to convert miles to meters
-	Function Name: fn_prvdr_dtls_by_lat_lon_typ_optn
+/**************************************
+	Function Name: fn_mtg_schdl_by_addr_typ_optn
 	Author: Chris Ehmett
-	Last Updated: 06/20/2016
-	The fn_prvdr_dtls_by_addr_typ_optn function lists 
+	Last Updated: 06/22/2016
+	The function lists 
 	all meeting or for only specific
 	types past wihtin radius around
-	address or zip passed
+	address or city and zip passed
 ***************************************/
 
---DROP FUNCTION "OAR_OSP_DB".fn_mtg_schdl_by_addr_typ_optn(double precision,varchar,text[])
---test select SELECT * FROM "OAR_OSP_DB".fn_mtg_schdl_by_addr_typ_optn(10, '18 Patton St Rochester, NH 03867', '{meeting type}');
---test select SELECT * FROM "OAR_OSP_DB".fn_mtg_schdl_by_addr_typ_optn(10, '03867', '{meeting type}');
---test select SELECT * FROM "OAR_OSP_DB".fn_mtg_schdl_by_addr_typ_optn (10, 43.310216, -70.987599);
+--DROP FUNCTION "OAR_OSP_DB".fn_mtg_schdl_by_addr_typ_optn(double precision,varchar,VARCHAR[])
+--test select SELECT * FROM "OAR_OSP_DB".fn_mtg_schdl_by_addr_typ_optn(10, '18 Patton St Rochester, NH 03867', '{DRA, SOS}');
+--test select SELECT * FROM "OAR_OSP_DB".fn_mtg_schdl_by_addr_typ_optn(10, 'Rochester, NH 03867', '{DRA, SOS}');
+--test select SELECT * FROM "OAR_OSP_DB".fn_mtg_schdl_by_addr_typ_optn(10, '18 Patton St Rochester, NH 03867');
 CREATE OR REPLACE FUNCTION "OAR_OSP_DB".fn_mtg_schdl_by_addr_typ_optn(
     IN _p_radius double precision,
     IN _p_addr VARCHAR,
-    IN _p_mtg_typ text[] DEFAULT '{}')
-  RETURNS TABLE (Provider_ID INTEGER, Latitude NUMBERIC, Longitude NUMERIC, Provider_Org_Name TEXT, Provider_Org_Alias TEXT, 
-					Phone_Number TEXT, Address_Line_1 TEXT, Address_Line_2 TEXT, Address_Line_3 TEXT, City_Name TEXT, State TEXT, Postal_code TEXT, 
-					Meeting_Type_Code TEXT, Meeting_Day TEXT, Meeting_Time TEXT, Meeting_Frequency TEXT)
+    IN _p_mtg_typ VARCHAR[] DEFAULT '{}')
+	RETURNS TABLE (Provider_ID INTEGER, Latitude NUMERIC, Longitude NUMERIC, Provider_Org_Name VARCHAR, Provider_Org_Alias VARCHAR, 
+					Phone_Number CHARACTER, Address_Line_1 VARCHAR, Address_Line_2 VARCHAR, Address_Line_3 VARCHAR, City_Name VARCHAR, State CHARACTER, Postal_code CHARACTER, 
+					Meeting_Type_Code CHARACTER, Meeting_Day VARCHAR, Meeting_Time TIME, Meeting_Frequency VARCHAR)
 AS
 $$
 
@@ -31,11 +30,11 @@ _v_lat NUMERIC;
 BEGIN        
 
 	--get lon lat from address or zip code passed and load into variable
-	SELECT tiger.ST_X(g.geomout), tiger.ST_Y(g.geomout) INTO _v_lon, _v_lat
-	FROM tiger.geocode(_p_addr) As g; 
+	SELECT ST_X(g.geomout), ST_Y(g.geomout) INTO _v_lon, _v_lat
+	FROM geocode(_p_addr) As g; 
 
 
-	IF _p_mtg_typ  <> '{}'::text[] THEN
+	IF _p_mtg_typ  <> '{}'::VARCHAR[] THEN
 	
 		RETURN QUERY SELECT * FROM "OAR_OSP_DB".fn_mtg_by_lat_lon_typ_optn(_p_radius,_v_lat, _v_lon,_p_mtg_typ);
 	ELSE
