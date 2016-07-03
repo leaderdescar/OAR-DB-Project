@@ -10,8 +10,9 @@
 ***************************************/
 --DROP FUNCTION "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(integer,varchar,text[])
 --test select SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(10, '18 Patton St Rochester, NH 03867', '{MD,SA}');
---test select SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(10, '03867', '{MD,SA}');
-
+--test select SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(10, 'Rochester, NH 03867', '{MD,SA}');
+--test select SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(10, '18 Patton St Rochester, NH 03867');
+--test select SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(10, 'Rochester, NH 03867');
 -- Function: "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(double precision, text, text[])
 
 
