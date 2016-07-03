@@ -12,6 +12,8 @@
 -- Function: "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(integer, numeric, numeric, text[])
 
 -- DROP FUNCTION "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(double precision, numeric, numeric, text[]);
+--SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(10, 43.310216, -70.987599);
+--SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(10, 43.310216, -70.987599, '{MD,SA}');
 
 CREATE OR REPLACE FUNCTION "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(
     IN _p_radius integer,
