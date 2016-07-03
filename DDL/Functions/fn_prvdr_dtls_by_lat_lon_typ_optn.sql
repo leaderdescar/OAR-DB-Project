@@ -6,7 +6,7 @@
 	The fn_prvdr_dtls_by_addr_typ_optn function lists 
 	all providers or for only specific
 	types past wihtn radius around
-	address or zip passed
+	lat lon passed
 ***************************************/
 
 -- Function: "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(integer, numeric, numeric, text[])
