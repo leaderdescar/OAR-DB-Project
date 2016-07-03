@@ -8,8 +8,8 @@
 	types past
 ***************************************/
 --DROP FUNCTION "OAR_OSP_DB".fn_prvdr_wth_typ_optn(text[])
---SELECT * FROM "OAR_OSP_DB".fn_prvdr_wth_typ_optn2  ('{MD, SA, SFST}');
---SELECT * FROM "OAR_OSP_DB".fn_prvdr_wth_typ_optn2  ();
+--SELECT * FROM "OAR_OSP_DB".fn_prvdr_wth_typ_optn  ('{MD, SA, SFST}');
+--SELECT * FROM "OAR_OSP_DB".fn_prvdr_wth_typ_optn  ();
 CREATE OR REPLACE FUNCTION "OAR_OSP_DB".fn_prvdr_wth_typ_optn (_p_prvdr_typ text[] default '{}')
 	RETURNS TABLE (Provider_Id INT,Provider_Type_Code CHAR,Geo_Point GEOMETRY(POINT,4326),Latitude NUMERIC  ,Longitude NUMERIC, Provider_Org_Name VARCHAR,
 			Provider_Org_Alias VARCHAR,Contact_Title VARCHAR ,Contact_First_Name VARCHAR ,Contact_Middle_Initial CHAR,
