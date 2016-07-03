@@ -9,12 +9,12 @@
 	address or zip passed
 ***************************************/
 
--- Function: "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(double precision, numeric, numeric, text[])
+-- Function: "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(integer, numeric, numeric, text[])
 
 -- DROP FUNCTION "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(double precision, numeric, numeric, text[]);
 
 CREATE OR REPLACE FUNCTION "OAR_OSP_DB".fn_prvdr_dtls_by_lat_lon_typ_optn(
-    IN _p_radius double precision,
+    IN _p_radius integer,
     IN _p_lat numeric,
     IN _p_lon numeric,
     IN _p_prvdr_typ text[] DEFAULT '{}'::text[])
