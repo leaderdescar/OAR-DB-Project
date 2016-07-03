@@ -1,4 +1,4 @@
-﻿/**************************************
+/**************************************
 	Function to convert miles to meters
 	Function Name: fn_prvdr_dtls_by_lat_lon_typ_optn
 	Author: Chris Ehmett
@@ -11,7 +11,7 @@
 --DROP FUNCTION "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(integer,varchar,text[])
 --test select SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(10, '18 Patton St Rochester, NH 03867', '{MD,SA}');
 --test select SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(10, '03867', '{MD,SA}');
---test select SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn10, 43.310216, -70.987599);
+
 -- Function: "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(double precision, text, text[])
 
 
