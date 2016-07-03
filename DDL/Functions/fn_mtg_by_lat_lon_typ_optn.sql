@@ -9,11 +9,11 @@
 	a lat and lon
 ***************************************/
 
---DROP FUNCTION "OAR_OSP_DB".fn_mtg_by_lat_lon_typ_optn(double precision,varchar,text[])
+--DROP FUNCTION "OAR_OSP_DB".fn_mtg_by_lat_lon_typ_optn(integer,varchar,text[])
 --test select SELECT * FROM "OAR_OSP_DB".fn_mtg_by_lat_lon_typ_optn (10, 43.310216, -70.987599, '{DRA}');
 --test select SELECT * FROM "OAR_OSP_DB".fn_mtg_by_lat_lon_typ_optn (10, 43.310216, -70.987599);
 CREATE OR REPLACE FUNCTION "OAR_OSP_DB".fn_mtg_by_lat_lon_typ_optn(
-    IN _p_radius double precision,
+    IN _p_radius integer,
     IN _p_lat numeric,
 	IN _p_lon numeric,
     IN _p_mtg_typ text[] DEFAULT '{}')
