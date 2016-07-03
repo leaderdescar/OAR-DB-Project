@@ -8,7 +8,7 @@
 	types past wihtn radius around
 	address or zip passed
 ***************************************/
---DROP FUNCTION "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(double precision,varchar,text[])
+--DROP FUNCTION "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(integer,varchar,text[])
 --test select SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(10, '18 Patton St Rochester, NH 03867', '{MD,SA}');
 --test select SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(10, '03867', '{MD,SA}');
 --test select SELECT * FROM "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn10, 43.310216, -70.987599);
@@ -16,7 +16,7 @@
 
 
 CREATE OR REPLACE FUNCTION "OAR_OSP_DB".fn_prvdr_dtls_by_addr_typ_optn(
-    IN _p_radius double precision,
+    IN _p_radius integer,
     IN _p_addr text,
     IN _p_prvdr_typ text[] DEFAULT '{}'::text[])
   RETURNS TABLE(provider_id integer, provider_type_code character, geo_point geometry, latitude numeric, longitude numeric, provider_org_name character varying, provider_org_alias character varying, contact_title character varying, contact_first_name character varying, contact_middle_initial character, contact_last_name character varying, phone_number character, address_line_1 character varying, address_line_2 character varying, address_line_3 character varying, city character varying, state character, postal_code character) AS
