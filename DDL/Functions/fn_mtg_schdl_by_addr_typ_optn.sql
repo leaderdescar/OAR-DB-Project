@@ -8,12 +8,12 @@
 	address or city and zip passed
 ***************************************/
 
---DROP FUNCTION "OAR_OSP_DB".fn_mtg_schdl_by_addr_typ_optn(double precision,varchar,VARCHAR[])
+--DROP FUNCTION "OAR_OSP_DB".fn_mtg_schdl_by_addr_typ_optn(integer,varchar,VARCHAR[])
 --test select SELECT * FROM "OAR_OSP_DB".fn_mtg_schdl_by_addr_typ_optn(10, '18 Patton St Rochester, NH 03867', '{DRA, SOS}');
 --test select SELECT * FROM "OAR_OSP_DB".fn_mtg_schdl_by_addr_typ_optn(10, 'Rochester, NH 03867', '{DRA, SOS}');
 --test select SELECT * FROM "OAR_OSP_DB".fn_mtg_schdl_by_addr_typ_optn(10, '18 Patton St Rochester, NH 03867');
 CREATE OR REPLACE FUNCTION "OAR_OSP_DB".fn_mtg_schdl_by_addr_typ_optn(
-    IN _p_radius double precision,
+    IN _p_radius integer,
     IN _p_addr VARCHAR,
     IN _p_mtg_typ VARCHAR[] DEFAULT '{}')
 	RETURNS TABLE (Provider_ID INTEGER, Latitude NUMERIC, Longitude NUMERIC, Provider_Org_Name VARCHAR, Provider_Org_Alias VARCHAR, 
