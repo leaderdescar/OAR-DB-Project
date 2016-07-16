@@ -36,6 +36,7 @@ BEGIN
 					WHERE mtg.Meeting_Type_Code = ANY(_p_mtg_typ)
 					AND ST_DWithin((GeomFromEWKT('SRID=4326;POINT(' || _p_lon || ' ' || _p_lat || ')'))::geography,
 						(mtg.Geo_Point)::geography, (SELECT "OAR_OSP_DB".fn_convert_radius(_p_radius)));
+						--GeomFromEWKT('[SRID];[Gemoetry type]('[Longitude] [Latitude]')'))
 						--ST_DWithin([center of radius], [points to serach if in radius], [radius in meeters])
 	ELSE
 			RETURN QUERY SELECT
